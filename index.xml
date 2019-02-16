@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Terminal</title>
+    <link>/</link>
+    <description>Recent content on Terminal</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 15 Feb 2019 12:51:51 -0500</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AI Article</title>
+      <link>/posts/my-second-post/</link>
+      <pubDate>Fri, 15 Feb 2019 12:51:51 -0500</pubDate>
+      
+      <guid>/posts/my-second-post/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>P3P Research</title>
+      <link>/posts/my-first-post/</link>
+      <pubDate>Fri, 15 Feb 2019 12:41:43 -0500</pubDate>
+      
+      <guid>/posts/my-first-post/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
