@@ -6,7 +6,7 @@
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<meta name="description" content=""/>
+<meta name="description" content="Deep Learning Studies for Handwritten Digit Classification Overview PyTorch, TensorFlow, and Keras are the three selected open-source software for building an elementary convolutional neural network(CNN). PyTorch is an open source machine learning library written in Python, used for applications like natural language processing. TensorFlow is an open-source software and symbolic math library for dataflow programming across various tasks, used for applications like neural networks. Keras is a high level API also written in python to manage different libraries, which focuses on being modular, extensible, and user-friendly."/>
 <meta name="keywords" content=""/>
 <meta name="robots" content="noodp"/>
 <link rel="canonical" href="/posts/my-second-post/" />
@@ -27,7 +27,7 @@
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="AI Article :: Terminal — A simple, retro theme for Hugo" />
-<meta name="twitter:description" content="" />
+<meta name="twitter:description" content="Deep Learning Studies for Handwritten Digit Classification Overview PyTorch, TensorFlow, and Keras are the three selected open-source software for building an elementary convolutional neural network(CNN). PyTorch is an open source machine learning library written in Python, used for applications like natural language processing. TensorFlow is an open-source software and symbolic math library for dataflow programming across various tasks, used for applications like neural networks. Keras is a high level API also written in python to manage different libraries, which focuses on being modular, extensible, and user-friendly." />
 <meta name="twitter:site" content="/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image" content="">
@@ -36,7 +36,7 @@
 <meta property="og:locale" content="en" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="AI Article :: Terminal — A simple, retro theme for Hugo">
-<meta property="og:description" content="" />
+<meta property="og:description" content="Deep Learning Studies for Handwritten Digit Classification Overview PyTorch, TensorFlow, and Keras are the three selected open-source software for building an elementary convolutional neural network(CNN). PyTorch is an open source machine learning library written in Python, used for applications like natural language processing. TensorFlow is an open-source software and symbolic math library for dataflow programming across various tasks, used for applications like neural networks. Keras is a high level API also written in python to manage different libraries, which focuses on being modular, extensible, and user-friendly." />
 <meta property="og:url" content="/posts/my-second-post/" />
 <meta property="og:site_name" content="AI Article" />
 <meta property="og:image" content="">
@@ -117,6 +117,312 @@
 
     <div class="post-content">
       
+
+<h2 id="deep-learning-studies-for-handwritten-digit-classification">Deep Learning Studies for Handwritten Digit Classification</h2>
+
+<h4 id="overview">Overview</h4>
+
+<p><code>PyTorch</code>, <code>TensorFlow</code>, and <code>Keras</code> are the three selected open-source software for building an elementary <code>convolutional neural network</code>(CNN).
+PyTorch is an open source machine learning library written in Python, used for applications like natural language processing.
+TensorFlow is an open-source software and symbolic math library for dataflow programming across various tasks, used for applications like neural networks.
+Keras is a high level API also written in python to manage different libraries, which focuses on being modular, extensible, and user-friendly.
+My chosen approach for the software comparison between PyTorch, TensorFlow and Keras is to have the three framework trained to recognize handwritten digits using the <code>MNIST dataset</code>.
+Choosing to use the MNIST dataset is suitable in terms of this context because training the classifier on the dataset is considered the “hello world” of image recognition.
+When doing software comparison in terms of speed, flexibility and other essential attributes of artificial intelligence libraries, having such a common, versatile dataset would guarantee the execution and allow a robust benchmark to perform the comparison.
+Additionally, the MNIST involves 70,000 images of handwritten digits: 60,000 for training and 10,000 for testing.
+The images are grayscale, 28x28 pixels, and centered to decrease preprocessing and achieve a quicker start.</p>
+
+<h4 id="convolutional-neural-network">Convolutional Neural Network</h4>
+
+<p>Convolutional neural network was initially constructed on neural networks, and a three-layer neural network was developed to classify the hand-written digits of the MNIST dataset.
+I noticed that it was able to reach a classification accuracy slightly over 85%. For a simple dataset like MNIST, 85% accuracy was not good.
+Then I presented convolutional neural network, as a deep learning method, to achieve significantly higher accuracy in image classification tasks.
+According to the pictures below, the further optimizations brought densely connected networks of a modest size up to 97- 98% accuracy in Pytorch, TensorFlow, and Keras, respectively.
+Moreover, in layer 1, the convolutional layer has 6 channels with 28x28 pixels, and pooling layer has 6 channels with 14x14 pixels.
+Then in layer 2, the convolutional layer has 16 channels with 14x14 pixels, and pooling layer has 16 channels with 7x7 pixels.</p>
+
+<p>
+  <img src="/img/cnn_layer1.PNG"  alt="layer1"  class="center"  />
+
+
+Hidden Layers of Convolutional Neural Network</p>
+
+<p>
+  <img src="/img/cnn_layer2.PNG"  alt="layer2"  class="center"  />
+
+
+Partial Process of Convolutional Neural Network</p>
+
+<h2 id="implementation">Implementation</h2>
+
+<h4 id="pytorch">PyTorch</h4>
+
+<p>Unlike other frameworks, PyTorch has dynamic execution graphs, and the computation graph is generated instantly.
+With the imports in place, I set the number of epochs to 10 for preparing the dataset, which indicates that I would loop over the complete training dataset ten times, while learning_rate and momentum are hyperparameters for the optimizer later on.
+Also, TorchVison handles DataLoaders for the dataset. After loading the MNIST dataset, I use a batch_size of 64 for training and size 200 for testing on this dataset.
+Below is the structure of my network. I used two 2D convolutional layers followed by two fully-connected layers. As for the activation function, I select rectifier linear units (ReLUs), and then consider torch.nn layers as what will contain the trainable parameters, yet torch.nn.functional are purely functional.
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CNN</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self):
+        super(CNN, self)<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+            <span style="color:#75715e"># Conv layer 1 output shape (6,28,28)</span>
+            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">6</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>),
+            nn<span style="color:#f92672">.</span>BatchNorm2d(<span style="color:#ae81ff">6</span>),
+            nn<span style="color:#f92672">.</span>ReLU(),
+            <span style="color:#75715e"># Pooling layer 1 (max pooling) output shape (6,14,14)</span>
+            nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>), 
+        )
+        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+            <span style="color:#75715e"># Conv layer 2 output shape (16,14,14)</span>
+            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">16</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>),
+            nn<span style="color:#f92672">.</span>BatchNorm2d(<span style="color:#ae81ff">16</span>),
+            nn<span style="color:#f92672">.</span>ReLU(),
+            <span style="color:#75715e"># Pooling layer 2 (max pooling) output shape (16,7,7)</span>
+            nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)     
+        )
+        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+            <span style="color:#75715e"># Fully connected layer 1 input shape (16*7*7)=(784)</span>
+            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">7</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">120</span>),
+            nn<span style="color:#f92672">.</span>ReLU()
+        )
+        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">120</span>, <span style="color:#ae81ff">10</span>)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv1(x)
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv2(x)
+        x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>view(x<span style="color:#f92672">.</span>size()[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) 
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>fc1(x)
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>fc2(x)
+        <span style="color:#66d9ef">return</span> x</code></pre></td></tr></table>
+</div>
+</div>
+<a href="https://github.com/TianyouDai/CSI4106-HandwrittenDigitClassification">View full version of code</a></p>
+
+<h4 id="tensorflow">TensorFlow</h4>
+
+<p>The main concept of TensorFlow is the tensor, a data structure similar to an array.
+Correspondingly, each epoch in TensorFlow is a full iteration, and I use dropout function in our final hidden layer to give each unit a 50% chance of being eliminated at every training step thus overfitting can be effectively prevented.
+To build my network, I set up the network as a computational graph to execute with 2 processes.
+TensorFlow differs from Pytorch because it has two initialization functions named weight_variable and bias_variable.
+In order to create this model, I need to generate a lot of weights and offsets.
+The weights in this model should be initialized with a small amount of noise to break the symmetry and avoid the zero gradient.
+Since I am using ReLU neurons, it is good to initialize the bias term with a small positive number, which avoids the issues of dead neuron.
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">45
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">weight_variable</span>(shape):
+    initial <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>truncated_normal(shape,stddev <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>)
+    <span style="color:#66d9ef">return</span> tf<span style="color:#f92672">.</span>Variable(initial)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">bias_variable</span>(shape):
+    initial <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>constant(<span style="color:#ae81ff">0.1</span>,shape <span style="color:#f92672">=</span> shape)
+    <span style="color:#66d9ef">return</span> tf<span style="color:#f92672">.</span>Variable(initial)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">conv2d</span>(x,W):
+    <span style="color:#66d9ef">return</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>conv2d(x, W, strides <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>], padding <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;SAME&#39;</span>)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">max_pool_2x2</span>(x):
+    <span style="color:#66d9ef">return</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>max_pool(x, ksize<span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">1</span>], strides<span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">1</span>], padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;SAME&#39;</span>)
+
+<span style="color:#75715e"># Conv layer 1 output shape (6,28,28)</span>
+W_conv1 <span style="color:#f92672">=</span> weight_variable([<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">6</span>])
+b_conv1 <span style="color:#f92672">=</span> bias_variable([<span style="color:#ae81ff">6</span>])
+x_image <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>reshape(x,[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">28</span>,<span style="color:#ae81ff">28</span>,<span style="color:#ae81ff">1</span>])
+h_conv1 <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>relu(conv2d(x_image,W_conv1) <span style="color:#f92672">+</span> b_conv1)
+
+<span style="color:#75715e"># Pooling layer 1 (max pooling) output shape (6,14,14)</span>
+h_pool1 <span style="color:#f92672">=</span> max_pool_2x2(h_conv1)
+
+<span style="color:#75715e"># Conv layer 2 output shape (16,14,14)</span>
+W_conv2 <span style="color:#f92672">=</span> weight_variable([<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">16</span>])
+b_conv2 <span style="color:#f92672">=</span> bias_variable([<span style="color:#ae81ff">16</span>])
+h_conv2 <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>relu(conv2d(h_pool1, W_conv2) <span style="color:#f92672">+</span> b_conv2)
+
+<span style="color:#75715e"># Pooling layer 2 (max pooling) output shape (16,7,7)</span>
+h_pool2 <span style="color:#f92672">=</span> max_pool_2x2(h_conv2)
+
+<span style="color:#75715e"># Fully connected layer 1 input shape (16*7*7)=(784)</span>
+W_fc1 <span style="color:#f92672">=</span> weight_variable([<span style="color:#ae81ff">7</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">7</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">120</span>])
+b_fc1 <span style="color:#f92672">=</span> bias_variable([<span style="color:#ae81ff">120</span>])
+h_pool2_flat <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>reshape(h_pool2, [<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">7</span><span style="color:#f92672">*</span><span style="color:#ae81ff">7</span><span style="color:#f92672">*</span><span style="color:#ae81ff">16</span>])
+h_fc1 <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>relu(tf<span style="color:#f92672">.</span>matmul(h_pool2_flat, W_fc1) <span style="color:#f92672">+</span> b_fc1)
+
+keep_prob <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>placeholder(<span style="color:#e6db74">&#34;float&#34;</span>)
+h_fc1_drop <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>dropout(h_fc1, keep_prob)
+
+<span style="color:#75715e"># Fully connected layer 2 to shape (120) for 10 classes</span>
+W_fc2 <span style="color:#f92672">=</span> weight_variable([<span style="color:#ae81ff">120</span>, <span style="color:#ae81ff">10</span>])
+b_fc2 <span style="color:#f92672">=</span> bias_variable([<span style="color:#ae81ff">10</span>])
+
+y_conv<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>softmax(tf<span style="color:#f92672">.</span>matmul(h_fc1_drop, W_fc2) <span style="color:#f92672">+</span> b_fc2)</code></pre></td></tr></table>
+</div>
+</div>
+<a href="https://github.com/TianyouDai/CSI4106-HandwrittenDigitClassification">View full version of code</a></p>
+
+<h4 id="keras">Keras</h4>
+
+<p>Keras provides a convenient method by having a special layer called flatten layer, which belongs to the core layer.
+It primarily processes multi-dimensional input as one-dimensional input, which is commonly used in the transition from convolutional layer to fully connected layer.
+Keras.layers.core.flatten() displays that flatten does not affect the size of the batch.
+After importing required classes and functions, initializing the random number generator to a constant seed value for reproducibility of results and loading the MNIST dataset, I reshape it in order to be used in training a CNN.
+It has a similar network as Pytorch and TensorFlow.
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">model <span style="color:#f92672">=</span> Sequential()
+
+<span style="color:#75715e"># Conv layer 1 output shape (6,28,28)</span>
+model<span style="color:#f92672">.</span>add(Conv2D(<span style="color:#ae81ff">6</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>),
+	padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;same&#39;</span>,  
+	input_shape<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">28</span>,<span style="color:#ae81ff">28</span>),
+	))
+model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;relu&#39;</span>))
+ 
+<span style="color:#75715e"># Pooling layer 1 (max pooling) output shape (6,14,14)</span>
+model<span style="color:#f92672">.</span>add(MaxPooling2D(
+	pool_size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>),
+        strides<span style="color:#f92672">=</span>(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>),
+	padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;same&#39;</span>,
+	))
+ 
+<span style="color:#75715e"># Conv layer 2 output shape (16,14,14)</span>
+model<span style="color:#f92672">.</span>add(Conv2D(<span style="color:#ae81ff">16</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;same&#34;</span>))
+model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;relu&#39;</span>))
+ 
+<span style="color:#75715e"># Pooling layer 2 (max pooling) output shape (16,7,7)</span>
+model<span style="color:#f92672">.</span>add(MaxPooling2D(pool_size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>),padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;same&#39;</span>))
+ 
+ 
+<span style="color:#75715e"># Fully connected layer 1 input shape (16*7*7)=(784)</span>
+model<span style="color:#f92672">.</span>add(Dropout(<span style="color:#ae81ff">0.2</span>))
+model<span style="color:#f92672">.</span>add(Flatten())
+model<span style="color:#f92672">.</span>add(Dense(<span style="color:#ae81ff">120</span>))
+model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;relu&#39;</span>))
+ 
+<span style="color:#75715e"># Fully connected layer 2 to shape (120) for 10 classes</span>
+model<span style="color:#f92672">.</span>add(Dense(<span style="color:#ae81ff">10</span>))
+model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;softmax&#39;</span>))</code></pre></td></tr></table>
+</div>
+</div>
+<a href="https://github.com/TianyouDai/CSI4106-HandwrittenDigitClassification">View full version of code</a></p>
+
     </div>
     
       <div class="pagination">
