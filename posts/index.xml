@@ -6,27 +6,36 @@
     <description>Recent content in Posts on Terminal</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 Feb 2019 12:51:51 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 23 Feb 2019 19:53:57 -0500</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>AI Article</title>
+      <title>Comparative Evaluation of AI Project</title>
+      <link>/posts/comparisonevaluation/</link>
+      <pubDate>Sat, 23 Feb 2019 19:53:57 -0500</pubDate>
+      
+      <guid>/posts/comparisonevaluation/</guid>
+      <description>Deep Learning Studies for Handwritten Digit Classification II Comparative Analysis Based on my research and training data from Deep Learning Studies for Handwritten Digit Classification I, I analyzed the advantages and disadvantages of Pytorch, TensorFlow, and Keras. More precisely, PyTorch is applied for training deep learning models in detail and is typically used to meet very specific requirements which could be the choice for a large number of researchers. TensorFlow and PyTorch are both good for advanced projects, such as creating different neural networks for voice/image recognition and text-based applications.</description>
+    </item>
+    
+    <item>
+      <title>AI Project</title>
       <link>/posts/my-second-post/</link>
       <pubDate>Fri, 15 Feb 2019 12:51:51 -0500</pubDate>
       
       <guid>/posts/my-second-post/</guid>
-      <description>Deep Learning Studies for Handwritten Digit Classification Overview PyTorch, TensorFlow, and Keras are the three selected open-source software for building an elementary convolutional neural network(CNN). PyTorch is an open source machine learning library written in Python, used for applications like natural language processing. TensorFlow is an open-source software and symbolic math library for dataflow programming across various tasks, used for applications like neural networks. Keras is a high level API also written in python to manage different libraries, which focuses on being modular, extensible, and user-friendly.</description>
+      <description>Deep Learning Studies for Handwritten Digit Classification I Overview PyTorch, TensorFlow, and Keras are the three selected open-source software for building an elementary convolutional neural network(CNN). PyTorch is an open source machine learning library written in Python, used for applications like natural language processing. TensorFlow is an open-source software and symbolic math library for dataflow programming across various tasks, used for applications like neural networks. Keras is a high level API also written in python to manage different libraries, which focuses on being modular, extensible, and user-friendly.</description>
     </item>
     
     <item>
       <title>P3P Research</title>
-      <link>/posts/my-first-post/</link>
+      <link>/posts/p3p/</link>
       <pubDate>Fri, 15 Feb 2019 12:41:43 -0500</pubDate>
       
-      <guid>/posts/my-first-post/</guid>
-      <description>P3P Research Test</description>
+      <guid>/posts/p3p/</guid>
+      <description>P3P Research in Progress&amp;hellip;</description>
     </item>
     
   </channel>
