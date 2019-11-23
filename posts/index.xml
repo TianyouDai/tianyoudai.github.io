@@ -6,10 +6,21 @@
     <description>Recent content in Posts on Terminal</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 Feb 2019 19:53:57 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 23 Nov 2019 17:06:28 -0500</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Euler Question One</title>
+      <link>/posts/euler-question-one/</link>
+      <pubDate>Sat, 23 Nov 2019 17:06:28 -0500</pubDate>
+      
+      <guid>/posts/euler-question-one/</guid>
+      <description>Goal This blog helps people understand how projecteuler.net works, and provides a basic solution of problem 1 in Python with explanations.
+About Project Euler projecteuler.net is a website that offers series of challenging mathematical/computer programming problems. It aims to help the audiences arrive at elegant and efficient methods, understand the use of a computer, and approach programming skills, in order to solve most problems.
+Get Stated An account could be simply registered if you do not have one.</description>
+    </item>
     
     <item>
       <title>Comparative Evaluation of AI Project</title>
